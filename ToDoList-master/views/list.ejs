@@ -1,0 +1,36 @@
+<%- include("header") -%>
+
+ <!-- adding template of header . Reads by default in views/footer.ejs -->
+ <section class="box" id="heading">
+   <h1><%=listTitle%></h1>
+ </section>
+
+ <section class="box">
+  
+    <!-- here newListItem is array newListItem -->
+    <% newListItem.forEach(function(listItem){ %>
+    
+      <form action="/delete" method="post">
+        
+        <section class="item">
+          <input type="checkbox" value="<%= listItem._id %>" onChange="this.form.submit()" name="checkbox1"/>
+          <!-- on checkbox: the form is submitted to the path /delete that is catched in app.js  by app.post("/delete") method-->
+          <p><%= listItem.name %></p>
+        </section>
+        <!-- this hidden input will not be visible but we are using it just to give it value=listTitle that iss helpful in backend to delete value from the present list only -->
+        <input type="hidden" name="listName" value="<%= listTitle %>"/>
+
+      </form>
+    
+    <% }) %>
+
+    <form action="/" method="post" class="item">
+      <label for="addItem">
+        <input type="text" id="addItem" placeholder="New Item" name="newItem" class="box"/>
+        <button type="submit" autocomplete="off" name="newList" value= <%= listTitle %>> +</button>
+      </label>
+    </form>
+
+ </section>
+
+<%- include("footer") -%>
